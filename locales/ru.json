@@ -1,4 +1,41 @@
 {
   "app.name": "easy-install",
-  "app.stage0": "Скелет установщика готов (Этап 0)"
+  "app.stage0": "Скелет установщика готов (Этап 0)",
+
+  "cli.help": "Быстрая подготовка окружения для Compass On-premise",
+  "cli.opt.yes": "Не задавать вопросы (non-interactive)",
+  "cli.opt.lang": "Язык сообщений (ru|en)",
+  "cli.opt.domain": "Домен для сертификата и global.yaml",
+  "cli.opt.le": "Выпустить сертификат Let's Encrypt (требует --domain)",
+  "cli.opt.root_mount": "Корневая директория данных (по умолчанию /opt/compass_data)",
+  "cli.opt.admin_email": "E-mail главного пользователя",
+  "cli.opt.admin_password": "Пароль главного пользователя (иначе сгенерируется)",
+  "cli.opt.skip_checks": "Пропустить ресурсные и IOPS проверки",
+  "cli.opt.skip_bench": "Пропустить только IOPS-бенчмарк",
+  "cli.opt.bench_runtime": "Длительность IOPS-бенчмарка, сек (по умолчанию 20)",
+  "cli.opt.log_file": "Путь к лог-файлу (по умолчанию logs/easy-install_<ts>.log)",
+  "cli.opt.dry_run": "Показать план действий, ничего не менять",
+  "cli.opt.verbose": "Подробные логи",
+
+  "err.le_without_domain": "Флаг --le требует обязательно указать --domain.",
+  "err.bad_lang": "Неизвестный язык: {lang}. Использую ru.",
+  "log.file_path": "Лог-файл: {path}",
+  "log.start": "Старт установщика (язык: {lang})",
+  "log.args": "Аргументы: {args}",
+  "log.plan": "План действий (dry-run/этапы):",
+  "log.plan.item": "[{i}/{n}] {name}",
+  "log.summary": "Режим: yes={yes}, domain={domain}, le={le}, root_mount={root_mount}, admin_email={admin}, skip_checks={skip_checks}, skip_bench={skip_bench}, bench_runtime={bench_runtime}, verbose={verbose}",
+  "exit.validation": "Завершение из-за ошибки валидации: код {code}",
+
+  "step.00a": "Проверка версии Python и возможный re-exec",
+  "step.00b": "Проверка ресурсов CPU/RAM/диска",
+  "step.00c": "Бенчмарк IOPS (fio)",
+  "step.1": "Определение ОС",
+  "step.2": "Установка системных пакетов",
+  "step.3": "Проверка и запуск Docker",
+  "step.4": "Создание venv и установка Python-зависимостей",
+  "step.5": "Генерация ../configs (create_configs.py)",
+  "step.6": "Патчи YAML (auth/captcha/team/global)",
+  "step.7": "Выпуск сертификата (LE/локальный)",
+  "step.8": "Финальная сводка и подсказки"
 }

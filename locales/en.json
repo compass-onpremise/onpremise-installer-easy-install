@@ -1,4 +1,41 @@
 {
   "app.name": "easy-install",
-  "app.stage0": "Installer skeleton ready (Stage 0)"
+  "app.stage0": "Installer skeleton ready (Stage 0)",
+
+  "cli.help": "Quick environment bootstrap for Compass On-premise",
+  "cli.opt.yes": "Answer yes to all prompts (non-interactive)",
+  "cli.opt.lang": "Output language (ru|en)",
+  "cli.opt.domain": "Domain for certificate and global.yaml",
+  "cli.opt.le": "Issue Let's Encrypt certificate (requires --domain)",
+  "cli.opt.root_mount": "Root data directory (default /opt/compass_data)",
+  "cli.opt.admin_email": "E-mail of the root user",
+  "cli.opt.admin_password": "Password of the root user (otherwise auto-generated)",
+  "cli.opt.skip_checks": "Skip resource and IOPS checks",
+  "cli.opt.skip_bench": "Skip IOPS benchmark only",
+  "cli.opt.bench_runtime": "IOPS benchmark duration in seconds (default 20)",
+  "cli.opt.log_file": "Path to log file (default logs/easy-install_<ts>.log)",
+  "cli.opt.dry_run": "Show plan only, do not change anything",
+  "cli.opt.verbose": "Verbose logs",
+
+  "err.le_without_domain": "--le flag requires --domain to be specified.",
+  "err.bad_lang": "Unknown language: {lang}. Falling back to ru.",
+  "log.file_path": "Log file: {path}",
+  "log.start": "Installer start (lang: {lang})",
+  "log.args": "Args: {args}",
+  "log.plan": "Execution plan (dry-run/stages):",
+  "log.plan.item": "[{i}/{n}] {name}",
+  "log.summary": "Mode: yes={yes}, domain={domain}, le={le}, root_mount={root_mount}, admin_email={admin}, skip_checks={skip_checks}, skip_bench={skip_bench}, bench_runtime={bench_runtime}, verbose={verbose}",
+  "exit.validation": "Exiting due to validation error: code {code}",
+
+  "step.00a": "Check Python version and possible re-exec",
+  "step.00b": "Check CPU/RAM/disk resources",
+  "step.00c": "IOPS benchmark (fio)",
+  "step.1": "Detect OS",
+  "step.2": "Install system packages",
+  "step.3": "Check and start Docker",
+  "step.4": "Create venv and install Python deps",
+  "step.5": "Generate ../configs (create_configs.py)",
+  "step.6": "Patch YAML (auth/captcha/team/global)",
+  "step.7": "Issue certificate (LE/local)",
+  "step.8": "Final summary and hints"
 }

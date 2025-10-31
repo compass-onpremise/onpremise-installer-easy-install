@@ -1,2 +1,19 @@
 # -*- coding: utf-8 -*-
-# Stage 0 placeholder. Реализация появится на следующих этапах.
+from __future__ import annotations
+from dataclasses import dataclass
+
+@dataclass
+class State:
+    yes: bool
+    lang: str
+    domain: str|None
+    le: bool
+    root_mount: str
+    admin_email: str|None
+    admin_password: str|None
+    skip_checks: bool
+    skip_bench: bool
+    bench_runtime: int
+    log_file: str
+    dry_run: bool
+    verbose: bool
