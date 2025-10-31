@@ -21,8 +21,9 @@ def run_create_configs(state, logger, i18n) -> str:
         sys.exit(2)
 
     logger.info(i18n.t("configs.run", path=str(script_path)))
+    python_exec = state.venv_python or sys.executable
     try:
-        subprocess.run([sys.executable, str(script_path)], check=True)
+        subprocess.run([python_exec, str(script_path)], check=True)
     except subprocess.CalledProcessError as exc:
         logger.error(i18n.t("configs.run_fail", code=exc.returncode))
         sys.exit(exc.returncode or 2)
