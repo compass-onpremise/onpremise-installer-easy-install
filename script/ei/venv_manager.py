@@ -24,6 +24,7 @@ class Dependency:
 
 DEPENDENCIES: List[Dependency] = [
     Dependency("PyYAML", "6.0.2", ["6.0.2", "6.0.1"]),
+    Dependency("ruamel.yaml", "0.18.5", ["0.18.5", "0.18.4", "0.17.35", "0.17.34"]),
     Dependency("pyopenssl", "24.0.0", ["24.0.0"]),
     Dependency("docker", "7.1.0", ["7.1.0"]),
     Dependency("mysql-connector-python", "8.2.0", ["8.2.0"]),
@@ -39,6 +40,13 @@ def ensure_virtualenv(state, logger, i18n) -> str:
         return "SKIP"
 
     venv_python = _ensure_venv_created(logger, i18n)
+    state.venv_path = str(VENV_DIR)
+    state.venv_python = str(venv_python)
+    site_packages = _detect_site_packages()
+    if site_packages is not None:
+        state.venv_site_packages = str(site_packages)
+        if str(site_packages) not in sys.path:
+            sys.path.insert(0, str(site_packages))
     issues = False
 
     for dep in DEPENDENCIES:
@@ -134,3 +142,16 @@ def _pip_install(venv_python: Path, package: str, version: str, logger, i18n) ->
     except Exception as exc:  # pragma: no cover
         logger.error(i18n.t("venv.pip_error", error=str(exc)))
     return False
+
+
+def _detect_site_packages() -> Path | None:
+    if os.name == "nt":
+        candidate = VENV_DIR / "Lib" / "site-packages"
+    else:
+        candidate = (
+            VENV_DIR
+            / "lib"
+            / f"python{sys.version_info.major}.{sys.version_info.minor}"
+            / "site-packages"
+        )
+    return candidate

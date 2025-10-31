@@ -20,12 +20,19 @@ from ei.docker_service import ensure_docker_service
 from ei.venv_manager import ensure_virtualenv
 from ei.run_create_configs import run_create_configs
 from ei.certs import ensure_certificates
-from config_manager.apply import apply_patches
 from ei.install_runner import run_install
 from ei.summary import print_summary
 from ei.i18n import I18N
 from ei.logger import Logger
 from ei.state import State
+
+
+def apply_config_patches(state, logger, i18n):
+    if state.venv_site_packages and state.venv_site_packages not in sys.path:
+        sys.path.insert(0, state.venv_site_packages)
+    from config_manager.apply import apply_patches as _apply_patches
+
+    return _apply_patches(state, logger, i18n)
 
 def build_parser(i18n: I18N) -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(description=i18n.t("cli.help"))
@@ -226,8 +233,12 @@ def main() -> int:
 
     step_idx += 1
     logger.step(step_idx, total, i18n.t("step.yaml_patch"))
-    status = apply_patches(state, logger, i18n)
-    logger.status(status)
+    if state.dry_run:
+        logger.info(i18n.t("patch.dry_run", path=str(REPO_ROOT / "configs")))
+        logger.status("SKIP")
+    else:
+        status = apply_config_patches(state, logger, i18n)
+        logger.status(status)
 
     step_idx += 1
     logger.step(step_idx, total, i18n.t("step.install"))
