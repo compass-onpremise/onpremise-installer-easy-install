@@ -21,7 +21,7 @@ The script performs the following steps:
 
 1. Detects and removes AppArmor (with confirmation).
 2. Checks CPU/RAM/disk capacity and runs fio IOPS tests.
-3. Detects the OS, installs required packages (nginx, docker, certbot, fio, etc.).
+3. Detects the OS, installs required packages (nginx, docker, acme.sh, fio, etc.).
 4. Enables Docker + Swarm, creates a Python virtual environment with dependencies.
 5. Generates template configuration files in `configs/`.
 6. Issues a Let’s Encrypt certificate or a local certificate signed by the bundled intermediate CA.
