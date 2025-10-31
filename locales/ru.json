@@ -60,6 +60,16 @@
   "capacity.dry_run": "Ресурсные проверки не выполняются в режиме dry-run.",
   "capacity.user_abort": "Установка прервана пользователем (Ctrl+C).",
 
+  "step.apparmor": "Проверка и удаление AppArmor",
+  "apparmor.skip": "Проверка AppArmor пропущена (dry-run или --skip-checks).",
+  "apparmor.not_found": "Служба AppArmor не обнаружена.",
+  "apparmor.prompt": "Обнаружен AppArmor. Остановить и удалить пакет? [y/N]",
+  "apparmor.decline": "AppArmor оставлен без изменений. Продолжение установки может завершиться ошибкой.",
+  "apparmor.abort": "Установка прервана пользователем при подтверждении AppArmor.",
+  "apparmor.cmd": "Выполняю: {command}",
+  "apparmor.fail": "Команда '{command}' завершилась с кодом {code}.",
+  "apparmor.removed": "AppArmor остановлен и удалён.",
+
   "os.detect.start": "Определяю операционную систему...",
   "os.detect.result": "Обнаружена ОС: {name} {version} (id={os_id}, тип={os_type}).",
   "os.detect.unsupported": "ОС с идентификатором {os_id} не поддерживается этим установщиком.",

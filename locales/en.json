@@ -60,6 +60,16 @@
   "capacity.dry_run": "Resource checks are skipped in dry-run mode.",
   "capacity.user_abort": "Installation aborted by user (Ctrl+C).",
 
+  "step.apparmor": "Check and remove AppArmor",
+  "apparmor.skip": "AppArmor check skipped (dry-run or --skip-checks).",
+  "apparmor.not_found": "AppArmor service not detected.",
+  "apparmor.prompt": "AppArmor detected. Stop and uninstall it now? [y/N]",
+  "apparmor.decline": "AppArmor left unchanged. Installation may fail later.",
+  "apparmor.abort": "Installation aborted by user during AppArmor confirmation.",
+  "apparmor.cmd": "Executing: {command}",
+  "apparmor.fail": "Command '{command}' exited with code {code}.",
+  "apparmor.removed": "AppArmor has been stopped and removed.",
+
   "os.detect.start": "Detecting operating system...",
   "os.detect.result": "Detected OS: {name} {version} (id={os_id}, type={os_type}).",
   "os.detect.unsupported": "Operating system with ID {os_id} is not supported by this installer.",

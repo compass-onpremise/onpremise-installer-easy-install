@@ -14,6 +14,7 @@ from ei.python_gate import ensure_python
 from ei.capacity import check_capacity
 from ei.bench import run_benchmarks
 from ei.os_detect import detect_os
+from ei.apparmor import handle_apparmor
 from ei.pkg_manager import ensure_packages
 from ei.docker_service import ensure_docker_service
 from ei.venv_manager import ensure_virtualenv
@@ -118,6 +119,7 @@ def main() -> int:
     plan = [
         i18n.t("step.python_check"),
         i18n.t("step.capacity_check"),
+        i18n.t("step.apparmor"),
         i18n.t("step.iops_bench"),
         i18n.t("step.os_detect"),
         i18n.t("step.pkg_install"),
@@ -159,6 +161,11 @@ def main() -> int:
     else:
         status = check_capacity(state, logger, i18n)
         logger.status(status)
+
+    step_idx += 1
+    logger.step(step_idx, total, i18n.t("step.apparmor"))
+    status = handle_apparmor(state, logger, i18n)
+    logger.status(status)
 
     step_idx += 1
     logger.step(step_idx, total, i18n.t("step.iops_bench"))
