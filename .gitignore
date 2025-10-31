@@ -31,8 +31,6 @@ __pycache__/
 
 # Logs
 logs/
-config_manager/
-locales/
 src/
 !src/README.md
 *.log
