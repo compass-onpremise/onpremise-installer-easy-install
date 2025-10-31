@@ -1,6 +1,6 @@
 # Compass On‑premise Installer
 
-`easy-install.py` prepares a host for Compass On‑premise: removes AppArmor, validates hardware, installs system packages, issues TLS certificates and runs the main `install.py` bootstrapper.
+`easy-install.py` prepares a host for Compass On‑premise: removes AppArmor, validates hardware, installs system packages, issues TLS certificates and runs the main `install.py` bootstrapper. You may provide a domain (`--domain example.org`) and request Let’s Encrypt (`--le`). If the domain is omitted, the generated configs fall back to the host IP and a local Compass certificate chain is issued automatically.
 
 ## Quick start
 
@@ -14,6 +14,8 @@ sudo python3 script/easy-install.py \
   --le \
   --admin-email admin@example.org
 ```
+
+> Both `--domain` and `--le` are optional. Without `--domain` the installer uses the primary host IP; without `--le` it generates a local Compass CA bundle that can be replaced later.
 
 The script performs the following steps:
 

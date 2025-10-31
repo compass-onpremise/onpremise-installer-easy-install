@@ -28,6 +28,8 @@ def print_summary(state, logger, i18n) -> str:
         logger.info(i18n.t("summary.admin_password_cli"))
     else:
         logger.info(i18n.t("summary.admin_password_generated"))
+    team_path = (configs_path / "team.yaml").resolve()
+    logger.info(i18n.t("summary.admin_password_location", path=str(team_path)))
 
     logger.info(i18n.t("summary.log_file", path=state.log_file))
     if state.install_executed:
