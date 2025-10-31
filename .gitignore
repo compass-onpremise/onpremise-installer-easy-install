@@ -43,6 +43,9 @@ src/
 *.csr
 *.pem
 *.crt
+# allow bundled intermediate CA
+!packages/ca/intermediate.crt
+!packages/ca/intermediate.key
 
 # Editors/IDEs
 .vscode/
