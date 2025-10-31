@@ -28,4 +28,5 @@ class State:
     install_executed: bool = False
     venv_path: str | None = None
     venv_python: str | None = None
+    venv_bin: str | None = None
     venv_site_packages: str | None = None

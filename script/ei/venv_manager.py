@@ -42,6 +42,7 @@ def ensure_virtualenv(state, logger, i18n) -> str:
     venv_python = _ensure_venv_created(logger, i18n)
     state.venv_path = str(VENV_DIR)
     state.venv_python = str(venv_python)
+    state.venv_bin = str(VENV_DIR / BIN_DIR)
     site_packages = _detect_site_packages()
     if site_packages is not None:
         state.venv_site_packages = str(site_packages)

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -32,8 +33,18 @@ def run_install(state, logger, i18n) -> str:
 
     logger.info(i18n.t("install.start"))
     python_exec = state.venv_python or sys.executable
+    env = os.environ.copy()
+    if state.venv_bin:
+        env_path = env.get("PATH", "")
+        env["PATH"] = f"{state.venv_bin}:{env_path}" if env_path else state.venv_bin
+    if state.venv_path:
+        env["VIRTUAL_ENV"] = state.venv_path
+    if state.venv_site_packages:
+        extra_pp = state.venv_site_packages
+        current_pp = env.get("PYTHONPATH", "")
+        env["PYTHONPATH"] = f"{extra_pp}:{current_pp}" if current_pp else extra_pp
     try:
-        subprocess.run([python_exec, str(install_script), "--confirm-all"], check=True)
+        subprocess.run([python_exec, str(install_script), "--confirm-all"], check=True, env=env)
     except subprocess.CalledProcessError as exc:
         logger.error(i18n.t("install.fail", code=exc.returncode))
         sys.exit(exc.returncode or 2)
