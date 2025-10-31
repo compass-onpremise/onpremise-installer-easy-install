@@ -92,7 +92,7 @@ def _build_requests(state, os_info: OsInfo) -> List[PackageRequest]:
             PackageRequest(["openssl"]),
         ]
         if state.le:
-            base.append(PackageRequest(["certbot"]))
+            base.append(PackageRequest(["acme.sh"]))
         need_fio = not state.skip_checks and not state.skip_bench
         base.append(PackageRequest(["fio"], optional=not need_fio))
     elif os_info.os_type == OSType.RPM:
@@ -105,7 +105,7 @@ def _build_requests(state, os_info: OsInfo) -> List[PackageRequest]:
             PackageRequest(["openssl"]),
         ]
         if state.le:
-            base.append(PackageRequest(["certbot"]))
+            base.append(PackageRequest(["acme.sh"]))
         need_fio = not state.skip_checks and not state.skip_bench
         base.append(PackageRequest(["fio"], optional=not need_fio))
     else:
