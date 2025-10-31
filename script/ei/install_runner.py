@@ -31,8 +31,9 @@ def run_install(state, logger, i18n) -> str:
         sys.exit(2)
 
     logger.info(i18n.t("install.start"))
+    python_exec = state.venv_python or sys.executable
     try:
-        subprocess.run([sys.executable, str(install_script), "--confirm-all"], check=True)
+        subprocess.run([python_exec, str(install_script), "--confirm-all"], check=True)
     except subprocess.CalledProcessError as exc:
         logger.error(i18n.t("install.fail", code=exc.returncode))
         sys.exit(exc.returncode or 2)
