@@ -17,6 +17,35 @@ src/pivot/config/pivot_auth.gophp
 src/pivot/config/pivot_mail.gophp
 configs/
 !yaml_template/configs
+packages/ca/compassExt.*
 .version
 .service_label
 .venv
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Venv
+.venv/
+
+# Logs
+logs/
+config_manager/
+locales/
+src/
+!src/README.md
+*.log
+
+# OS junk
+.DS_Store
+
+# TLS (не коммитим приватные ключи/цепочки)
+*.key
+*.csr
+*.pem
+*.crt
+
+# Editors/IDEs
+.vscode/
+.idea/

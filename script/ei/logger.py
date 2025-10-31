@@ -53,5 +53,11 @@ class Logger:
         self.info(f"{CYAN}⏳ [{i}/{n}] {label}{RESET}")
 
     def status(self, status: str):
-        color = GREEN if status.upper() in ("DONE","FOUND","SKIP") else (YELLOW if status.upper()=="WARN" else RED)
+        upper = status.upper()
+        if upper in ("DONE", "FOUND") or upper.startswith("SKIP"):
+            color = GREEN
+        elif upper in ("WARN", "PROCEED_WITH_WARNINGS"):
+            color = YELLOW
+        else:
+            color = RED
         self.info(f"{color}✔ {status}{RESET}")
