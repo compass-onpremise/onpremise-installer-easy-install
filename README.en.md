@@ -1,6 +1,33 @@
 # Compass On‑premise Installer
 
-`easy-install.py` prepares a host for Compass On‑premise: removes AppArmor, validates hardware, installs system packages, issues TLS certificates and runs the main `install.py` bootstrapper. You may provide a domain (`--domain example.org`) and request Let’s Encrypt (`--le`). If the domain is omitted, the generated configs fall back to the host IP and a local Compass certificate chain is issued automatically.
+`easy-install.py` prepares a host for Compass On‑premise: removes AppArmor when needed, validates hardware, installs missing packages, issues TLS certificates, and runs the primary installer `install.py`. You can pass a domain (`--domain`) and enable Let’s Encrypt (`--le`); otherwise the configuration falls back to the host IP and a local Compass CA chain is issued.
+
+## Overview
+
+1. Verify Python version and re-execute if required.
+2. Disable AppArmor.
+3. Check CPU, RAM, storage, and run fio IOPS tests.
+4. Detect the OS and install missing packages (nginx, docker, fio, etc.).
+5. Enable Docker + Swarm and create the Python virtual environment.
+6. Run `create_configs.py` to generate configuration templates.
+7. Issue TLS certificates through Let’s Encrypt or the bundled intermediate CA.
+8. Apply mandatory YAML patches.
+9. Launch `install.py` (unless `--skip-install` is set).
+
+## Requirements
+
+**Minimum software:** `python3` must already be available. The installer pulls the rest (`nginx`, `docker`, `fio`, `acme.sh`, `ruamel.yaml`, etc.) automatically.
+
+**Supported operating systems:**
+
+- Debian family: Debian 10+, Ubuntu 20.04+.
+- RPM family: RedOS 8+, AlmaLinux 9.6+, MSVSfera 9.6+, ALT Linux 11.0+, Fedora 36+.
+
+**Hardware requirements (aligned with installer checks):**
+
+- CPU: 8 vCPU / threads or more.
+- RAM: 16 GB or more.
+- Storage: 30 GB of free space on the data root and Docker data-root.
 
 ## Quick start
 
@@ -15,18 +42,7 @@ sudo python3 script/easy-install.py \
   --admin-email admin@example.org
 ```
 
-> Both `--domain` and `--le` are optional. Without `--domain` the installer uses the primary host IP; without `--le` it generates a local Compass CA bundle that can be replaced later.
-
-The script performs the following steps:
-
-1. Detects and removes AppArmor (with confirmation).
-2. Checks CPU/RAM/disk capacity and runs fio IOPS tests.
-3. Detects the OS, installs required packages (nginx, docker, fio, etc.; acme.sh is downloaded automatically if LE is requested).
-4. Enables Docker + Swarm, creates a Python virtual environment with dependencies.
-5. Generates template configuration files in `configs/`.
-6. Issues a Let’s Encrypt certificate or a local certificate signed by the bundled intermediate CA.
-7. Applies mandatory YAML patches (auth/captcha/team/global).
-8. Launches `install.py --confirm-all` unless `--skip-install` is provided.
+> Both `--domain` and `--le` are optional. Without `--le` the installer issues a local Compass certificate; without `--domain` it configures services using the host IP address.
 
 ## Command-line options
 
@@ -49,17 +65,18 @@ The script performs the following steps:
 
 ## After the run
 
-- A summary block is printed to the console and log (domain, IP, paths, next steps).
-- Configuration files are located in `configs/`. For advanced setup follow the [official documentation](https://doc-onpremise.getcompass.ru/information.html).
-- Certificates are placed under `/etc/nginx/ssl/`. Replace them with your own if required.
-- If `install.py` was skipped, run it manually when ready:
+- A summary is printed to stdout and the log (`summary.*`).
+- Configuration templates are generated in `configs/` for further customization.
+- Certificates reside under `/etc/nginx/ssl/`.
+- If `install.py` was skipped, launch it manually when ready:
 
 ```bash
 sudo python3 script/install.py --confirm-all
 ```
 
-## Further reading
+## Manual installation and docs
 
-Full deployment and configuration guide: [doc-onpremise.getcompass.ru](https://doc-onpremise.getcompass.ru/information.html).
+- Full deployment guide: [doc-onpremise.getcompass.ru](https://doc-onpremise.getcompass.ru/information.html).
+- For manual setup without `easy-install.py`, follow the “Подготовка к развертыванию” sections in the documentation above.
 
-Support: [Compass On-premise workspace](https://getcompass.com/join/wlSjdBJd/), [Telegram](https://t.me/getcompass) or [support@getcompass.ru](mailto:support@getcompass.ru).
+Support: [Compass On-premise workspace](https://getcompass.com/join/wlSjdBJd/), [Telegram](https://t.me/getcompass), or [support@getcompass.ru](mailto:support@getcompass.ru).

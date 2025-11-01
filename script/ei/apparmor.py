@@ -65,3 +65,5 @@ def _is_present() -> bool:
         return "apparmor.service" in (result.stdout or "")
     except Exception:
         return False
+
+
