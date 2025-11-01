@@ -33,8 +33,8 @@
 
 ```bash
 sudo apt update && sudo apt install -y git python3 python3-venv
-git clone https://github.com/getCompass/onpremise-installer.git
-cd onpremise-installer
+git clone git@github.com:compass-onpremise/onpremise-installer-easy-install.git
+cd onpremise-installer-easy-install
 sudo python3 script/easy-install.py \
   --yes \
   --domain example.org \
